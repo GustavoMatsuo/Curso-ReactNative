@@ -9,28 +9,38 @@ export default class App extends Component{
     DisplayValue:'0',
   }
 
+  addDigi = n =>{
+    this.setState({DisplayValue:n})
+  }
+  clearMemory = () =>{
+    this.setState({DisplayValue:"0"})
+  }
+  setOperation = operation =>{
+    
+  }
+
   render() {
     return (
       <View style={styles.container}>
       <Display value={this.state.DisplayValue}/>
         <View style={styles.buttons}>
-          <Button label='ac'/>
-          <Button label='/'/>
-          <Button label='7'/>
-          <Button label='8'/>
-          <Button label='9'/>
-          <Button label='*'/>
-          <Button label='4'/>
-          <Button label='5'/>
-          <Button label='6'/>
-          <Button label='-'/>
-          <Button label='1'/>
-          <Button label='2'/>
-          <Button label='3'/>
-          <Button label="+"/>
-          <Button label='0'/>
-          <Button label='.'/>
-          <Button label='='/>
+          <Button label='ac' triple onClick={this.clearMemory}/>
+          <Button label='/' operation onClick={this.setOperation}/>
+          <Button label='7' onClick={this.addDigi}/>
+          <Button label='8' onClick={this.addDigi}/>
+          <Button label='9' onClick={this.addDigi}/>
+          <Button label='*' operation onClick={this.setOperation}/>
+          <Button label='4' onClick={this.addDigi}/>
+          <Button label='5' onClick={this.addDigi}/>
+          <Button label='6' onClick={this.addDigi}/>
+          <Button label='-' operation onClick={this.setOperation}/>
+          <Button label='1' onClick={this.addDigi}/>
+          <Button label='2' onClick={this.addDigi}/>
+          <Button label='3' onClick={this.addDigi}/>
+          <Button label="+" operation onClick={this.setOperation}/>
+          <Button label='0' double onClick={this.addDigi}/>
+          <Button label='.' onClick={this.addDigi}/>
+          <Button label='=' operation onClick={this.setOperation}/>
         </View>
       </View>
     );
