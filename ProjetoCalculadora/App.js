@@ -16,15 +16,15 @@ export default class App extends Component{
   state={ ...InitialState }
 
   addDigi = n =>{
-    //Evita que mais de um "." seja adicionado
-    if(n == '.' && this.state.displayValue.includes('.')){
-      return
-    }
-
     //Testa se tiver apenas o "0" no display ele receber "True" (na realidade 0 deixando de ser "false")
     //caso não seja "0" ele recebe "false" (ou melhor dizendo se mantendo com mesmo valor), para não limpar o display
     const clearDisplay = this.state.displayValue === '0'|| 
       this.state.clearDisplay
+
+    //Evita que mais de um "." seja adicionado
+    if(n == '.' && !clearDisplay && this.state.displayValue.includes('.')){
+      return
+    }
 
     //Testa se o clearDisplay for "0" o displayValue recebe "" limpando o display, caso não seja 
     //ele será "false" o display mantem o que esta nela para adicionar o proximo numero
@@ -67,7 +67,7 @@ export default class App extends Component{
       //limpa o value[1] para receber os proximos numeros
       values[1] = 0
       this.setState({
-        displayValue: values[0],
+        displayValue: `${values[0]}`,
         //testa se for true ele limpa a variavel, caso contrario ele 
         //armazena para realizar a conta na proxima chamada
         operation: equals ? null : operation, 
