@@ -12,6 +12,12 @@ export default class App extends Component{
         <Text style={styles.instructions}>Tamanho da grade: 
           {Params.getRowAmount()} X {Params.getColumsAmount()}</Text>
         <Field/>
+        <Field opened />
+        <Field opened nearMine={1}/>
+        <Field opened nearMine={2}/>
+        <Field opened nearMine={3}/>
+        <Field opened nearMine={4}/>
+        <Field opened nearMine={6}/>
       </View>
     );
   }
