@@ -1,13 +1,15 @@
 import React from 'react'
 import {View, StyleSheet, Text} from 'react-native'
 import params from '../params'
+import Mine from './Mine'
 
 export default props => {
     const styleField = [styles.field]
-    const {mined, opened, nearMine} = props
+    const {mined, opened, nearMine, exploded} = props
     
     //outros estilos
     if(opened)styleField.push(styles.opened)
+    if(exploded)styleField.push(styles.exploded)
     if(styleField.length === 1)styleField.push(styles.regular)
 
     //Faz a verificação de qual cor será
@@ -23,6 +25,11 @@ export default props => {
         <View style={styleField}>
             {!mined && opened && nearMine ? 
                 <Text style={[styles.label, { color: color }]}>{nearMine}</Text>
+                :
+                false
+            }
+            {mined && opened ?
+                <Mine/>
                 :
                 false
             }
@@ -53,4 +60,8 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: params.fontSize,
     },
+    exploded:{
+        backgroundColor: 'red',
+        borderColor: 'red'
+    }
 })
