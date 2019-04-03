@@ -1,9 +1,9 @@
 const createBoard = (rows, columns)=>{
-    return Array(rows).fill(0).map((_, row)=>{
-        return Array(columns).fill(0).map((_,column)=>{
+    return Array(rows).fill(0).map((_, nRow)=>{
+        return Array(columns).fill(0).map((_,nColumn)=>{
             return{
-                row,
-                column,
+                nRow,
+                nColumn,
                 opened: false,
                 flagged: false,
                 mined: false,
@@ -29,8 +29,10 @@ const spreadMines = (board, minesAmount)=>{
     }
 }
 
-const createMineBoard=(rows, columns, minedAmount)=>{
+const createMinedBoard=(rows, columns, minedAmount)=>{
     const board=createBoard(rows, columns)
     spreadMines(board, minedAmount)
     return board
 }
+
+export {createMinedBoard}

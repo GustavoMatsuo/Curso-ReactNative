@@ -2,27 +2,40 @@ import React, {Component} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import Params from './src/params'
 
-import Field from './src/components/Field'
+import MineField from './src/components/MineField'
+import {createMinedBoard} from './src/Logic'
 
 export default class App extends Component{
+
+  constructor(props){
+    super(props)
+    this.state = this.createState()
+  }
+
+  minesAmount = ()=>{
+    const rows = Params.getRowAmount()
+    const columns = Params.getColumsAmount() 
+    return Math.ceil(rows*columns*Params.difficultLevel)
+  }
+
+  createState = ()=>{
+    const cols = Params.getColumsAmount()
+    const rows = Params.getRowAmount()
+    return{
+      board: createMinedBoard(rows, cols, this.minesAmount())
+    }
+  }
+  
   render() {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>Iniciando o Mines</Text>
         <Text style={styles.instructions}>Tamanho da grade: 
           {Params.getRowAmount()} X {Params.getColumsAmount()}</Text>
-        <Field/>
-        <Field opened />
-        <Field opened nearMine={1}/>
-        <Field opened nearMine={2}/>
-        <Field opened nearMine={3}/>
-        <Field opened nearMine={4}/>
-        <Field opened nearMine={6}/>
-        <Field mined />
-        <Field mined opened/>
-        <Field mined opened exploded/>
-        <Field flagged/>
-        <Field flagged opened/>
+        
+        <View style={styles.board}>
+          {<MineField board={this.state.board}/>}
+        </View>
       </View>
     );
   }
@@ -30,20 +43,11 @@ export default class App extends Component{
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
+    flex:1,
+    justifyContent: 'center'
+  },
+  board:{
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-    fontWeight: 'bold'
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+    backgroundColor: '#eee'
+  }
 });
