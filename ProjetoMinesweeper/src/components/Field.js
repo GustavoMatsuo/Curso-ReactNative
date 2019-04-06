@@ -1,13 +1,13 @@
 import React from 'react'
-import {View, StyleSheet, Text} from 'react-native'
+import {View, StyleSheet, Text, TouchableWithoutFeedback} from 'react-native'
 import params from '../params'
 import Mine from './Mine'
 import Flag from './Flag'
 
 export default props => {
-    const styleField = [styles.field]
-    const {mined, opened, nearMine, exploded, flagged} = props
+    const {mined, opened, nearMines, exploded, flagged} = props
     
+    const styleField = [styles.field]
     //outros estilos
     if(opened)styleField.push(styles.opened)
     if(exploded)styleField.push(styles.exploded)
@@ -16,31 +16,25 @@ export default props => {
 
     //Faz a verificação de qual cor será
     let color = null
-    if(nearMine > 0){
-        if(nearMine == 1) color='#2a28d7'
-        if(nearMine == 2) color='#2b520f'
-        if(nearMine >= 3 && nearMine < 6) color='#f9060a'
-        if(nearMine >= 6) color='#f221a9'
+    if(nearMines > 0){
+        if(nearMines == 1) color='#2a28d7'
+        if(nearMines == 2) color='#2b520f'
+        if(nearMines >= 3 && nearMines < 6) color='#f9060a'
+        if(nearMines >= 6) color='#f221a9'
     }
 
     return (
-        <View style={styleField}>
-            {!mined && opened && nearMine ? 
-                <Text style={[styles.label, { color: color }]}>{nearMine}</Text>
-                :
-                false
-            }
-            {mined && opened ?
-                <Mine/>
-                :
-                false
-            }
-            {!opened && flagged ? 
-                <Flag/>
-                :
-                false
-            }
-        </View>
+        <TouchableWithoutFeedback onPress={props.onOpen}>
+            <View style={styleField}>
+                {!mined && opened && nearMines > 0 ? 
+                    <Text style={[styles.label, { color: color }]}>{nearMines}</Text> 
+                    : 
+                    false
+                }
+                {mined && opened ? <Mine/> : false }
+                {!opened && flagged ? <Flag/> : false }
+            </View>
+        </TouchableWithoutFeedback>
     )
 }
 
