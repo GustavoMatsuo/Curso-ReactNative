@@ -8,4 +8,6 @@ A referência usada para realizar o projeto foi a calculadora do IOS
 
 
 ### Projeto Minesweeper
-Modelo do antigo jogo
+A referência usada para realizar o projeto foi o modelo do antigo jogo
+
+![IMG](https://i.imgur.com/uJaJfIE.jpg)
