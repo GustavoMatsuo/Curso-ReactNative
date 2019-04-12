@@ -4,6 +4,7 @@ import moment from 'moment'
 import 'moment/locale/pt-br'
 import todayImg from '../../assets/imgs/today.jpg'
 import commonStyles from '../commonStyles'
+import Task from '../components/Task'
 
 export default class Agenda extends Component {
     render(){
@@ -16,9 +17,9 @@ export default class Agenda extends Component {
                     </View>
                 </ImageBackground>
                 <View style={styles.tasksContainer}>
-                <Text>Tarefa 1</Text>
-                <Text>Tarefa 2</Text>
-                <Text>Tarefa 3</Text>
+                    <Task desc='Tarefa pendente' estimate={new Date()} doneAt={null} />
+                    <Task desc='Tarefa concluida' estimate={new Date()} doneAt={new Date()} />
+
                 </View>
             </View>
         )
