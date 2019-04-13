@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Text, View, StyleSheet, ImageBackground} from 'react-native'
+import {Text, View, StyleSheet, ImageBackground, FlatList} from 'react-native'
 import moment from 'moment'
 import 'moment/locale/pt-br'
 import todayImg from '../../assets/imgs/today.jpg'
@@ -7,6 +7,23 @@ import commonStyles from '../commonStyles'
 import Task from '../components/Task'
 
 export default class Agenda extends Component {
+    state ={
+        tasks: [
+            {id: Math.random(), desc: 'Comprar curso de react native', estimate: new Date(), doneAt: new Date()},
+            {id: Math.random(), desc: 'Concluir curso', estimate: new Date(), doneAt: null},
+            {id: Math.random(), desc: 'Comprar curso de react native', estimate: new Date(), doneAt: new Date()},
+            {id: Math.random(), desc: 'Concluir curso', estimate: new Date(), doneAt: null},
+            {id: Math.random(), desc: 'Comprar curso de react native', estimate: new Date(), doneAt: new Date()},
+            {id: Math.random(), desc: 'Concluir curso', estimate: new Date(), doneAt: null},
+            {id: Math.random(), desc: 'Comprar curso de react native', estimate: new Date(), doneAt: new Date()},
+            {id: Math.random(), desc: 'Concluir curso', estimate: new Date(), doneAt: null},
+            {id: Math.random(), desc: 'Comprar curso de react native', estimate: new Date(), doneAt: new Date()},
+            {id: Math.random(), desc: 'Concluir curso', estimate: new Date(), doneAt: null},
+            {id: Math.random(), desc: 'Comprar curso de react native', estimate: new Date(), doneAt: new Date()},
+            {id: Math.random(), desc: 'Concluir curso', estimate: new Date(), doneAt: null},
+        ]
+    }
+
     render(){
         return(
             <View style={styles.container}>
@@ -17,9 +34,10 @@ export default class Agenda extends Component {
                     </View>
                 </ImageBackground>
                 <View style={styles.tasksContainer}>
-                    <Task desc='Tarefa pendente' estimate={new Date()} doneAt={null} />
-                    <Task desc='Tarefa concluida' estimate={new Date()} doneAt={new Date()} />
-
+                    <FlatList data={this.state.tasks} 
+                        keyExtractor={item => `${item.id}`}
+                        renderItem={({item})=><Task {...item}/>} 
+                    />
                 </View>
             </View>
         )
