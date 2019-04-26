@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Modal, View, Text, TextInput, DatePickerIOS, StyleSheet, TouchableWithoutFeedback, TouchableOpacity, Alert} from 'react-native'
+import {Modal, View, Text, TextInput, DatePickerIOS, StyleSheet, TouchableWithoutFeedback, TouchableOpacity, Alert, DatePickerAndroid, Platform} from 'react-native'
 import moment from 'moment'
 import commonStyles from '../commonStyles'
 
@@ -18,7 +18,37 @@ export default class AddTask extends Component{
         this.setState({...initialState})
     }
 
+    handleDateAndroidChange = () => {
+        DatePickerAndroid.open({
+            date: this.state.date
+        }).then(e => {
+            if(e.action !== DatePickerAndroid.dismissedAction){
+               const momentDate = moment(this.state.date)
+               momentDate.date(e.day)
+               momentDate.month(e.month)
+               momentDate.year(e.year)
+               this.setState({date:momentDate.toDate()}) 
+            }
+        })
+    }
+
     render(){
+
+        let datePicker = null
+        if(Platform.OS === 'ios'){
+            datePicker = <DatePickerIOS mode='date' date={this.state.date}
+                onDateChange={date => this.setState({date})}/>
+        }
+        else{
+            datePicker = (
+                <TouchableOpacity onPress={this.handleDateAndroidChange}>
+                    <Text style={styles.date}>
+                        {moment(this.state.date).format('ddd, D [de] MMMM [de] YYYY')}
+                    </Text>
+                </TouchableOpacity>
+            )
+        }
+
         return(
             <Modal onRequestClose={this.props.onCancel}
                 visible={this.props.isVisible}
@@ -31,8 +61,7 @@ export default class AddTask extends Component{
                     <TextInput placeholder='Descrição...' style={styles.input}
                         onChangeText={desc => this.setState({desc})}
                         value={this.state.desc}/>
-                    <DatePickerIOS mode='date' date={this.state.date}
-                        onDateChange={date => this.setState({date})}/>
+                    {datePicker}
                     <View style={{
                         flexDirection:'row',
                         justifyContent: 'flex-end'}}>
@@ -85,5 +114,11 @@ const styles = StyleSheet.create({
         borderColor: '#e3e3e3',
         borderRadius: 6
     },
-
+    date: {
+       fontFamily: commonStyles.fontFamily,
+       fontSize: 20,
+       marginLeft: 10,
+       marginTop: 10,
+       textAlign: 'center'
+    }
 })
