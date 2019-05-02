@@ -37,7 +37,7 @@ export default class Agenda extends Component {
         tasks.push({
             id: Math.random(),
             desc: task.desc,
-            estimate: task.date,
+            estimateAt: task.date,
             doneAt: null
         })
         this.setState({tasks, showAddTask: false}, 

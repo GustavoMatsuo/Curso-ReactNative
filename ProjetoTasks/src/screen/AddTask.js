@@ -27,7 +27,7 @@ export default class AddTask extends Component{
                momentDate.date(e.day)
                momentDate.month(e.month)
                momentDate.year(e.year)
-               this.setState({date:momentDate.toDate()}) 
+               this.setState({ date: momentDate.toDate() }) 
             }
         })
     }
