@@ -1,9 +1,9 @@
-import React, {Components} from 'react'
+import React, {Component} from 'react'
 import { StyleSheet, Text, TextInput, View, ImageBackground, TouchableOpacity, Alert} from 'react-native'
 import commonStyles from '../commonStyles'
 import backgroundImage from '../../assets/imgs/login.jpg'
 
-export default class Auth extends Components{
+export default class Auth extends Component{
     state ={ 
         stageNew: false,
         name: '',
@@ -43,13 +43,13 @@ export default class Auth extends Components{
                         style={styles.input}
                         value={this.state.email}
                         onChangeText={email => this.setState({email})} />
-                    <Textinput 
+                    <TextInput 
                         placeholder='Senha'
                         style={styles.input}
                         value={this.state.password}
                         onChangeText={password => this.setState({password})} />
                     {this.state.stageNew &&
-                        <Textinput 
+                        <TextInput 
                             placeholder='Confirmação' 
                             style={styles.input} 
                             value={this.state.confirmPassword}
@@ -75,3 +75,43 @@ export default class Auth extends Components{
         )
     }
 }
+
+const styles = StyleSheet.create({
+    background: {
+        flex: 1,
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    title: {
+        fontFamily: commonStyles.fontFamily,
+        color: '#FFF',
+        fontSize: 70,
+        marginBottom: 10,
+    },
+    subtitle: {
+        fontFamily: commonStyles.fontFamily,
+        color: '#FFF',
+        fontSize: 20,
+    },
+    formContainer: {
+        backgroundColor: 'rgba(0,0,0,0.8)',
+        padding: 20,
+        width: '90%',
+    },
+    input: {
+        marginTop: 10,
+        backgroundColor: '#FFF',
+    },
+    button: {
+        backgroundColor: '#080',
+        marginTop: 10,
+        padding: 10,
+        alignItems: 'center',
+    },
+    buttonText: {
+        fontFamily: commonStyles.fontFamily,
+        color: '#FFF',
+        fontSize: 20
+    }
+})
