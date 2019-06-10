@@ -6,6 +6,9 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 import axios from 'axios'
 
 import todayImg from '../../assets/imgs/today.jpg'
+import tomorrowImg from '../../assets/imgs/tomorrow.jpg'
+import weekImg from '../../assets/imgs/week.jpg'
+import monthImg from '../../assets/imgs/month.jpg'
 import commonStyles from '../commonStyles'
 
 import Task from '../components/Task'
@@ -78,7 +81,9 @@ export default class Agenda extends Component {
 
     loadTasks = async() => {
         try{
-            const maxDate = moment().format('YYYY-MM-DD 23:59')
+            const maxDate = moment()
+                .add({days: this.props.dayAhead})
+                .format('YYYY-MM-DD 23:59')
             const res = await axios.get(`${server}/tasks?date=${maxDate}`)
             this.setState({tasks: res.data}, this.filterTasks)
         }
@@ -88,19 +93,45 @@ export default class Agenda extends Component {
     }
 
     render(){
+        let styleColor = null
+        let image = null
+
+        switch(this.props.dayAhead){
+            case 0:
+                styleColor = commonStyles.colors.today
+                image = todayImg
+                break
+            case 1:
+                styleColor = commonStyles.colors.tomorrow
+                image = tomorrowImg
+                break
+            case 7:
+                styleColor = commonStyles.colors.week
+                image = weekImg
+                break
+            default:
+                styleColor = commonStyles.colors.month
+                image = monthImg
+                break
+            
+        }
+
         return(
             <View style={styles.container}>
                 <AddTask isVisible={this.state.showAddTask}
                     onSave={this.addTask}
                     onCancel={() => this.setState({showAddTask: false})}/>
-                <ImageBackground source={todayImg} style={styles.background}>
+                <ImageBackground source={image} style={styles.background}>
                     <View style={styles.iconBar}>
+                        <TouchableOpacity onPress={() => this.props.navigation.openDrawer()}>
+                            <Icon name='bars' size={20} color={commonStyles.colors.Secondary} />
+                        </TouchableOpacity>
                         <TouchableOpacity onPress={this.toggleFilter}>
                             <Icon name={this.state.showDoneTasks? 'eye' : 'eye-slash'} size={20} color={commonStyles.colors.Secondary} />
                         </TouchableOpacity>
                     </View>
                     <View style={styles.titleBar}>
-                        <Text style={styles.title}>Hoje</Text>
+                        <Text style={styles.title}>{this.props.title}</Text>
                         <Text style={styles.subTitle}>{moment().locale('pt-br').format('ddd, D [de] MMMM')}</Text>
                     </View>
                 </ImageBackground>
@@ -110,7 +141,7 @@ export default class Agenda extends Component {
                         renderItem={({item}) => <Task {...item} onToggleTask={this.toggleTask } onDelete={this.deleteTask}/>} 
                     />
                 </View>
-                <ActionButton buttonColor={commonStyles.colors.today}
+                <ActionButton buttonColor={styleColor}
                     onPress={() => {this.setState({showAddTask: true})}}/>
             </View>
         )
@@ -149,6 +180,6 @@ const styles=StyleSheet.create({
         marginTop: Platform.OS === 'ios' ? 30 : 10,
         marginHorizontal: 20,
         flexDirection: 'row',
-        justifyContent: 'flex-end'
+        justifyContent: 'space-between'
     }
 })
