@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { StyleSheet, Text, View, ImageBackground, TouchableOpacity, Alert} from 'react-native'
+import { StyleSheet, Text, View, ImageBackground, TouchableOpacity, Alert, AsyncStorage} from 'react-native'
 import axios from 'axios'
 import {server, showError} from '../common'
 import Authinput from '../components/Authinput'
@@ -23,6 +23,7 @@ export default class Auth extends Component{
             })
             axios.defaults.headers.common['Authorization'] 
                 = `bearer ${res.data.token}`
+            AsyncStorage.setItem('userData', JSON.stringify(res.data))
             this.props.navigation.navigate('Home', res.data)
         }
         catch(err){
@@ -108,17 +109,17 @@ export default class Auth extends Component{
                             style={styles.input} 
                             value={this.state.confirmPassword}
                             onChangeText={confirmPassword => this.setState({confirmPassword})} />}
-                </View>
 
-                <TouchableOpacity 
-                    disabled={!validForm}
-                    onPress={this.signinOrSignup}>
-                    <View style={[ styles.button, !validForm ? {backgroundColor: '#aaa'} : {} ]}>
-                        <Text style={styles.buttonText}>
-                            {this.state.stageNew ? 'Registrar' : 'Entrar'}
-                        </Text>
-                    </View>    
-                </TouchableOpacity>
+                    <TouchableOpacity 
+                        disabled={!validForm}
+                        onPress={this.signinOrSignup}>
+                        <View style={[ styles.button, !validForm ? {backgroundColor: '#aaa'} : {} ]}>
+                            <Text style={styles.buttonText}>
+                                {this.state.stageNew ? 'Registrar' : 'Entrar'}
+                            </Text>
+                        </View>    
+                    </TouchableOpacity>
+                </View>
                 <TouchableOpacity 
                     style={{ padding: 10 }}
                     onPress={() => this.setState({stageNew: !this.state.stageNew})}>
