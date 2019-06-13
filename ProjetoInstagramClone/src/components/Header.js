@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {Text, View, StyleSheet, Platform, Image} from 'react-native'
-import Icon from '../assets/imgs/icon.png'
+import Icon from '../../assets/imgs/icon.png'
 
 export default class Header extends Component{
     render(){
@@ -20,7 +20,8 @@ const styles = StyleSheet.create({
         marginTop: Platform.OS === 'ios' ? 20 : 0,
         padding: 10,
         borderBottomWidth: 1,
-        borderColor: '#BBB'
+        borderColor: '#BBB',
+        width: '100%'
     },
     rowContainer:{
         flexDirection: 'row',

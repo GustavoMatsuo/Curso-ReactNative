@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
-        marginTop: 10
+        margin: 10
     },
     capition: {
         marginLeft: 10,
