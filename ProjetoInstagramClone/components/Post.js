@@ -3,6 +3,7 @@ import {StyleSheet, View, Image, Dimensions} from 'react-native'
 
 import Auth from './Auth'
 import Comments from './Comments'
+import AddComment from './AddComment'
 
 
 export default class Post extends Component{
@@ -12,6 +13,7 @@ export default class Post extends Component{
                 <Image source={this.props.image} style={styles.image} />
                 <Auth email='fulano@gmail.com' nickname='fulano de tal' />
                 <Comments comments={this.props.comments} />
+                <AddComment />
             </View>
         )
     }
