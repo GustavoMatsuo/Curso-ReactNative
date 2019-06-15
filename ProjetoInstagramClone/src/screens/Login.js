@@ -23,7 +23,7 @@ export default class Login extends Component{
                 <TO onPress={this.login} style={styles.buttom}>
                     <Text styel={styles.buttomText}>Login</Text>
                 </TO>
-                <TO onPress={() => {}} style={styles.buttom}>
+                <TO onPress={() => this.props.navigation.navigate('Register')} style={styles.buttom}>
                     <Text styel={styles.buttomText}>Criar uma conta...</Text>
                 </TO>
             </View>
