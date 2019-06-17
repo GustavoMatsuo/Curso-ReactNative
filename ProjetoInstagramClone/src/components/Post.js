@@ -13,7 +13,7 @@ export default class Post extends Component{
                 <Image source={this.props.image} style={styles.image} />
                 <Auth email='fulano@gmail.com' nickname='fulano de tal' />
                 <Comments comments={this.props.comments} />
-                <AddComment />
+                <AddComment postId={this.props.id} />
             </View>
         )
     }
