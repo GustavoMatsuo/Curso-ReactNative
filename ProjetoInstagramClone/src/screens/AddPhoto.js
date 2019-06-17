@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { addPost } from '../store/actions/post'
 import { View, Text, TouchableOpacity as TO, TextInput, Image, ScrollView, Alert, StyleSheet, Platform, Dimensions } from 'react-native'
 import imagePicker from 'react-native-image-picker'
 
-export default class AddPhoto extends Component {
+class AddPhoto extends Component {
     state = {
         image: null,
         comment: ''
@@ -21,7 +23,19 @@ export default class AddPhoto extends Component {
     }
 
     save = () => {
-        Alert.alert('Imagem adicionada !', this.state.comment)
+        this.props.onAddPost({
+            id: Math.random(),
+            nickname: this.props.name,
+            email: this.props.email,
+            image: this.state.image,
+            comments: [{
+                nickname: this.props.name,
+                comment: this.state.comment
+            }]
+        })
+
+        this.setState({ image: null, comment: '' })
+        this.props.navigation.navigate('Feed')
     }
 
     render() {
@@ -37,7 +51,7 @@ export default class AddPhoto extends Component {
                     </TO>
                     <TextInput placeholder='Algum comentário para a foto?'
                         style={styles.input} value={this.state.comment}
-                        onChangeText={comment => this.setState({ comment })}/>
+                        onChangeText={comment => this.setState({ comment })} />
                     <TO onPress={this.save} style={styles.buttom}>
                         <Text style={styles.buttomText}>Salvar</Text>
                     </TO>
@@ -81,3 +95,18 @@ const styles = StyleSheet.create({
         width: '90%'
     }
 })
+
+const mapStateToProps = ({ user }) => {
+    return {
+        name: user.name,
+        email: user.email
+    }
+} 
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onAddPost: post => dispatch(addPost(post))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddPhoto)

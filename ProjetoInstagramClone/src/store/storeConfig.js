@@ -1,8 +1,10 @@
 import { createStore, combineReducers } from 'redux'
 import userReducer from './reducers/user'
+import PostReducer from './reducers/post'
 
 const reducers = combineReducers({
-    user: userReducer
+    user: userReducer,
+    posts: PostReducer
 })
 
 const storeConfig = () => {
