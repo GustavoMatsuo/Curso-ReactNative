@@ -4,6 +4,8 @@ import { addPost } from '../store/actions/post'
 import { View, Text, TouchableOpacity as TO, TextInput, Image, ScrollView, Alert, StyleSheet, Platform, Dimensions } from 'react-native'
 import imagePicker from 'react-native-image-picker'
 
+const msg = 'Você precisa estar logado!'
+
 class AddPhoto extends Component {
     state = {
         image: null,
@@ -11,6 +13,11 @@ class AddPhoto extends Component {
     }
 
     pickImage = () => {
+        if(!this.props.name){
+            Alert.alert('Falha!', msg)
+            return
+        }
+
         imagePicker.showImagePicker({
             title: 'Escolha a imagem',
             maxHeight: 600,
@@ -51,8 +58,10 @@ class AddPhoto extends Component {
                     </TO>
                     <TextInput placeholder='Algum comentário para a foto?'
                         style={styles.input} value={this.state.comment}
+                        editable={this.props.name != null}
                         onChangeText={comment => this.setState({ comment })} />
-                    <TO onPress={this.save} style={styles.buttom}>
+                    <TO onPress={this.save} disabled={!this.props.name}
+                        style={[styles.buttom, !this.props.name ? {backgroundColor:'#888'} : null]}>
                         <Text style={styles.buttomText}>Salvar</Text>
                     </TO>
                 </View>
