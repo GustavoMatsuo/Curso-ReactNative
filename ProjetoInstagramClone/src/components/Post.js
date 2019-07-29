@@ -14,7 +14,7 @@ class Post extends Component{
         return (
             <View style={styles.container}>
                 <Auth email='fulano@gmail.com' nickname='fulano de tal' />
-                <Image source={this.props.image} style={styles.image} />
+                <Image source={{ uri: this.props.image}} style={styles.image} />
                 <Comments comments={this.props.comments} />
                 {addComment}
             </View>
